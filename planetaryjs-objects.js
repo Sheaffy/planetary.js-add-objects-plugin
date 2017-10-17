@@ -7,6 +7,9 @@
       
       options.speed = options.speed || config.speed || 0;
       options.imagesrc = options.imagesrc || config.imagesrc || "";
+      options.imagewidth = options.imagewidth || config.imagewidth || 50;
+      options.imageheight = options.imageheight || config.imageheight || 50;
+      options.fade = options.fade || config.fade || false;
 
       var ping = { time: new Date(), options: options };
       if (config.latitudeFirst) {
@@ -53,7 +56,11 @@
       {
           //Behind Sphere > 90 degrees
       } else {
-         context.drawImage(img, coords[0] ,coords[1], 50 ,50)
+
+         var imagewidth = object.options.imagewidth;
+         var imageheight = object.options.imageheight;
+
+         context.drawImage(img, (coords[0]-(imagewidth/2)) ,(coords[1]-(imageheight/2)), imagewidth ,imageheight)
       }
               
 
