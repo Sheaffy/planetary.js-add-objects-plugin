@@ -19,3 +19,14 @@ here is an example of it being used to add a object
 ```   
 planet.plugins.objects.add(-1.3167103, 50.6927176, { imagesrc:"/wizard.png" });
 ```
+
+Plugin Options
+```   
+{ 
+speed: 2,
+imagesrc:"/wizard.png",
+imageheight:100,
+imagewidth:100,
+fade:true
+}
+```   
