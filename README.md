@@ -14,3 +14,8 @@ Once imported you can then load the plugin into the main planet object.
 planet.loadPlugin(planetaryjs.plugins.objects());		
 ```
 
+here is an example of it being used to add a object
+
+```   
+planet.plugins.objects.add(-1.3167103, 50.6927176, { imagesrc:"/wizard.png" });
+```
