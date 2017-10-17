@@ -36,6 +36,7 @@
 
     var drawobject = function(planet, context, now, timechange, object) {
       
+      //If Speed is greater than 0 animate object on lng/x axis
       var newlng = 0
       if(object.options.speed > 0){
         var xmove = (timechange*(object.options.speed))/100;
@@ -44,13 +45,16 @@
         newlng = object.lng
       }
       
-
+      //Get Spherical Coords from lat lng
       var coords = planet.projection([newlng, object.lat])  
       var img = new Image()
       img.src = object.options.imagesrc;
       
 
       var geoangle = d3.geo.distance([newlng, object.lat],[-planet.projection.rotate()[0], -planet.projection.rotate()[1]]);
+
+      //closeness used for fading
+      var closeness = 1.57079632679490 - geoangle;
 
       if (geoangle > 1.57079632679490)
       {
@@ -60,7 +64,21 @@
          var imagewidth = object.options.imagewidth;
          var imageheight = object.options.imageheight;
 
+         if(object.options.fade == true){
+           if(closeness < 0.1){
+            context.globalAlpha = closeness*10;
+           }
+         }
+
          context.drawImage(img, (coords[0]-(imagewidth/2)) ,(coords[1]-(imageheight/2)), imagewidth ,imageheight)
+         context.globalAlpha = 1
+         //If fade is true fade out and in
+         
+
+          
+
+
+
       }
               
 
