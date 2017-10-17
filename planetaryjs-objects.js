@@ -6,6 +6,7 @@
       options = options || {};
       
       options.speed = options.speed || config.speed || 10;
+      options.imagesrc = options.imagesrc || config.imagesrc || "";
 
       var ping = { time: new Date(), options: options };
       if (config.latitudeFirst) {
@@ -34,7 +35,7 @@
       
       var coords = planet.projection([(object.lng), object.lat])  
       var img = new Image()
-      img.src = "/char.png";
+      img.src = object.options.imagesrc;
       
 
       var geoangle = d3.geo.distance([object.lng, object.lat],[-planet.projection.rotate()[0], -planet.projection.rotate()[1]]);
