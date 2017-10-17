@@ -5,7 +5,7 @@
     var addObject = function(lng, lat, options) {
       options = options || {};
       
-      options.speed = options.speed || config.speed || 10;
+      options.speed = options.speed || config.speed || 0;
       options.imagesrc = options.imagesrc || config.imagesrc || "";
 
       var ping = { time: new Date(), options: options };
@@ -23,22 +23,31 @@
       var newobjects = [];
       for (var i = 0; i < objects.length; i++) {
         var object = objects[i];
-        
+        var timechange = now - object.time;
         newobjects.push(object);
-        drawobject(planet, context, now, object);
+        drawobject(planet, context, now, timechange, object);
         
       }
       objects = newobjects;
     };
 
-    var drawobject = function(planet, context, now, object) {
+    var drawobject = function(planet, context, now, timechange, object) {
       
-      var coords = planet.projection([(object.lng), object.lat])  
+      var newlng = 0
+      if(object.options.speed > 0){
+        var xmove = (timechange*(object.options.speed))/100;
+        newlng = (object.lng+xmove)
+      } else {
+        newlng = object.lng
+      }
+      
+
+      var coords = planet.projection([newlng, object.lat])  
       var img = new Image()
       img.src = object.options.imagesrc;
       
 
-      var geoangle = d3.geo.distance([object.lng, object.lat],[-planet.projection.rotate()[0], -planet.projection.rotate()[1]]);
+      var geoangle = d3.geo.distance([newlng, object.lat],[-planet.projection.rotate()[0], -planet.projection.rotate()[1]]);
 
       if (geoangle > 1.57079632679490)
       {
